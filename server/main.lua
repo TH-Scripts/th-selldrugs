@@ -1,0 +1,10 @@
+ESX = exports["es_extended"]:getSharedObject()
+
+ESX.RegisterServerCallback('th-selldrugs:drugCountEcstasy', function(source, cb)
+    local countEcstasy = exports.ox_inventory:GetItemCount(1, Config.Drugtype.ecstasy)
+    cb(countEcstasy)
+end)
+ESX.RegisterServerCallback('th-selldrugs:drugCountCannbis', function(source, cb)
+    local countCannabis = exports.ox_inventory:GetItemCount(1, Config.Drugtype.cannabis)
+    cb(countCannabis)
+end)
