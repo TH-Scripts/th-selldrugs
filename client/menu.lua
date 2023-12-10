@@ -76,12 +76,6 @@ function DrugmenuStoffer()
         lib.registerContext({
             id = 'drug_type_notstarted',
             title = 'Forskellige drugs',
-            menu = 'selldrugs_notstarted',
-            onBack = function()
-                currentDrug = 'Intet'
-                sellstarted = nil
-                canStartSell = nil
-            end,
             onExit = function()
                 currentDrug = 'Intet'
                 sellstarted = nil

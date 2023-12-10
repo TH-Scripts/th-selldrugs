@@ -90,7 +90,7 @@ RegisterNetEvent('th-selldrug:dispatch', function(pedPos)
     elseif Config.Calllist == 'visualz' then
         exports['visualz_opkaldsliste']:AddCall(source, "Drug salg", Config.PoliceJob, pedPos)
     elseif Config.Callist == 'custom' then
-        print('[X] Calllist indsat forkert!')
+        print('[X] Indstil din calllist!')
         --Indsæt dit eget dispatch system her
     end
 end)
