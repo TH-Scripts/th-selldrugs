@@ -195,3 +195,21 @@ function notifyToLongDistance()
         iconColor = '#e82e20'
     })
 end
+
+RegisterNetEvent('th-selldrugs:allDrugsSold', function()
+    lib.notify({
+        id = 'sold_all_drugs',
+        title = 'Drugs',
+        description = 'Du har solgt alle dine drugs',
+        position = 'right-top',
+        style = {
+            backgroundColor = '#141517',
+            color = '#C1C2C5',
+            ['.description'] = {
+              color = '#909296'
+            }
+        },
+        icon = 'circle-xmark',
+        iconColor = '#e82e20'
+    })
+end)

@@ -1,4 +1,5 @@
 ESX = exports["es_extended"]:getSharedObject()
+cannotSell = nil
 
 ESX.RegisterServerCallback('th-selldrugs:drugCountEcstasy', function(source, cb)
     local countEcstasy = exports.ox_inventory:GetItemCount(1, Config.Drugs.ecstasy)
@@ -24,8 +25,9 @@ RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy, sellHe
     if sellEcstasy then
         drugType = Config.Drugs.ecstasy
         if ecstacy < 1 then
-            TriggerClientEvent('th-selldrugs:stopDrugSale', source)
             x = 0
+            cannotSell = true
+            TriggerClientEvent('th-selldrugs:stopDrugSale', source)
         elseif ecstacy == 1 then
             x = 1
         elseif ecstacy == 2 then
@@ -37,6 +39,7 @@ RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy, sellHe
         drugType = Config.Drugs.joints
         if cannabis < 1 then
             x = 0
+            cannotSell = true
             TriggerClientEvent('th-selldrugs:stopDrugSale', source)
         elseif cannabis == 1 then
             x = 1
@@ -49,6 +52,7 @@ RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy, sellHe
         drugType = Config.Drugs.heroin
         if heroin < 1 then
             x = 0
+            cannotSell = true
             TriggerClientEvent('th-selldrugs:stopDrugSale', source)
         elseif heroin == 1 then
             x = 1
@@ -71,7 +75,13 @@ RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy, sellHe
         exports.ox_inventory:RemoveItem(1, drugType, x)
     end
 
-    exports.ox_inventory:AddItem(1, Config.BlackMoneyItem, money)
+    if cannotSell then
+        TriggerClientEvent('th-selldrugs:allDrugsSold', source)
+        cannotSell = nil
+    else
+        exports.ox_inventory:AddItem(1, Config.BlackMoneyItem, money)
+    end
+
 end)
 
 RegisterNetEvent('th-selldrug:dispatch', function(pedPos)

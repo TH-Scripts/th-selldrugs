@@ -2,16 +2,18 @@ currentDrug = 'Intet'
 sellEcstasy = false
 sellCannabis = false
 sellHeroin = false
+canStartSell = nil
 
 
 function Drugmenu()
     if sellstarted == nil then
         lib.registerContext({
             id = 'selldrugs_notstarted',
-            title = 'Påbegynd salg af drugs',
+            title = TranslateCap('drugmenu_title_context'),
             onExit = function()
                 currentDrug = 'Intet'
                 sellstarted = nil
+                canStartSell = nil
             end,
             options = {
             {
@@ -34,7 +36,7 @@ function Drugmenu()
                 description = TranslateCap('drugmenu_sale_title_desc'),
                 icon = 'circle-check',
                 onSelect = function()
-                    if sellstarted == nil then
+                    if canStartSell == nil then
                         notifyChooseDrug()
                     else 
                         sellstarted = true
@@ -66,6 +68,7 @@ function Drugmenu()
                     sellEcstasy = false
                     sellCannabis = false
                     sellHeroin = false
+                    canStartSell = nil
                 end
             },
             }
@@ -83,49 +86,51 @@ function DrugmenuStoffer()
             onBack = function()
                 currentDrug = 'Intet'
                 sellstarted = nil
+                canStartSell = nil
             end,
             onExit = function()
                 currentDrug = 'Intet'
                 sellstarted = nil
+                canStartSell = nil
             end, 
             options = {
             {
                 title = Config.Title,
             },
             {
-                title = 'Ecstasy',
-                description = 'Tryk for at vælge ecstasy!\n ANTAL: '..ecstasy,
+                title = TranslateCap("ecstasy_context_title"),
+                description = TranslateCap("ecstasy_context_desc")..'\n ANTAL: '..ecstasy,
                 icon = 'tablets',
                 disabled = disabledEcstasy,
                 onSelect = function()
-                    currentDrug = 'Ecstasy - Antal '..ecstasy..''
+                    currentDrug = TranslateCap("ecstasy_context_currentDrug")..' - Antal '..ecstasy..''
                     Drugmenu()
                     sellEcstasy = true
-                    sellstarted = true
+                    canStartSell = true
                 end
             },
             {
-                title = 'Joints',
-                description = 'Tryk for at vælge joints!\n ANTAL: '..cannabis,
+                title = TranslateCap('joints_context_title'),
+                description = TranslateCap("joints_context_desc")..'\n ANTAL: '..cannabis,
                 icon = 'joint',
                 disabled = disabledCannabis,
                 onSelect = function()
-                    currentDrug = 'Joints - Antal '..cannabis..''
+                    currentDrug = TranslateCap("joints_context_currentDrug")..' - Antal '..cannabis..''
                     Drugmenu()
                     sellCannabis = true
-                    sellstarted = true
+                    canStartSell = true
                 end
             },
             {
-                title = 'Heroin',
-                description = 'Tryk for at vælge heroin!\n ANTAL: '..heroin,
+                title = TranslateCap('heroin_context_title'),
+                description = TranslateCap("heroin_context_desc")..'\n ANTAL: '..heroin,
                 icon = 'syringe',
                 disabled = disabledHeroin,
                 onSelect = function()
-                    currentDrug = 'Heroin - Antal '..heroin..''
+                    currentDrug = TranslateCap("heroin_context_currentDrug")..' - Antal '..heroin..''
                     Drugmenu()
                     sellHeroin = true
-                    sellstarted = true
+                    canStartSell = true
                 end
             },
             }

@@ -14,7 +14,7 @@ Config.Drugs = {
 --Politi handlinger
 Config.Calllist = 'custom' -- 'visualz' (Visualz callliste) 'omikkel' (Omikkels callliste) 'custom' (Indsæt eget dispatch)
 
-Config.PedReject = 5 -- 1=100%, 2=50%, 3=33%, 4=25%, 5=20%
+Config.PedReject = 3 -- 1=100%, 2=50%, 3=33%, 4=25%, 5=20%
 Config.Cops = 2 --1=100%, 2=50%, 3=33%, 4=25%, 5=20%
 Config.PoliceJob = 'police'
 
