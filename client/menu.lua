@@ -1,12 +1,7 @@
 currentDrug = 'Intet'
-canSell = nil
-disabledEcstasy = nil
-
-function checkCount()
-    if ecstasy <= 1 then
-        disabledEcstasy = true
-    end
-end
+canSell     = false
+sellEcstasy = false
+sellCannabis = false
 
 
 function Drugmenu()
@@ -14,19 +9,22 @@ function Drugmenu()
         lib.registerContext({
             id = 'selldrugs_notstarted',
             title = 'Påbegynd salg af drugs',
+            onExit = function()
+                canSell     = false
+                currentDrug = 'Intet'
+                sellstarted = nil
+            end,
             options = {
             {
                 title = Config.Title..'\n Drug valgt: ' ..currentDrug,
             },
             {
-                title = 'Vælg dryg-type',
+                title = 'Vælg drug-type',
                 description = 'Vælg hvilket drug-type du ønsker at sælge',
                 icon = 'clipboard',
                 onSelect = function()
-                    print('hello')
                     if cannabis > 0 or ecstasy > 0 then
                         DrugmenuStoffer()
-                        canSell = true
                     else
                         notifyHarIngenDrugs()
                     end
@@ -37,7 +35,7 @@ function Drugmenu()
                 description = 'Påbegynd salg af dit valgte drug her',
                 icon = 'circle-check',
                 onSelect = function()
-                    if canSell == nil then
+                    if sellstarted == nil then
                         notifyChooseDrug()
                     else 
                         sellstarted = true
@@ -75,14 +73,21 @@ function Drugmenu()
 end
 
 function DrugmenuStoffer()
-    checkCount()
     if sellstarted == nil then
         lib.registerContext({
             id = 'drug_type_notstarted',
             title = 'Forskellige drugs',
             menu = 'selldrugs_notstarted',
             onBack = function()
+                canSell     = false
+                currentDrug = 'Intet'
+                sellstarted = nil
             end,
+            onExit = function()
+                canSell     = false
+                currentDrug = 'Intet'
+                sellstarted = nil
+            end, 
             options = {
             {
                 title = Config.Title,
@@ -95,15 +100,22 @@ function DrugmenuStoffer()
                 onSelect = function()
                     currentDrug = 'Ecstasy- Antal '..ecstasy..''
                     Drugmenu()
+                    canSell     = true
+                    sellEcstasy = true
+                    sellstarted = true
                 end
             },
             {
                 title = 'Cannabis',
                 description = 'Tryk for at vælge cannabis!\n ANTAL: '..cannabis,
                 icon = 'cannabis',
+                disabled = disabledCannabis,
                 onSelect = function()
                     currentDrug = 'Cannabis - Antal '..cannabis..''
                     Drugmenu()
+                    canSell      = true
+                    sellCannabis = true
+                    sellstarted = true
                 end
             },
             }
