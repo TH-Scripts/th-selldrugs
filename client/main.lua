@@ -64,7 +64,6 @@ Citizen.CreateThread(function(ecstasy, cannabis)
                             if pedType ~= 28 and IsPedAPlayer(ped) == false then
                                 currentped = pos
                                 if distance <= Config.MaxDistance and ped ~= player and ped ~= oldped and IsControlJustPressed(1, 38) then
-                                    TriggerServerEvent('th-selldrugs:checkDrugs')
                                     if not sellingnow then 
                                         local isForbiddenPed = false
                                         for _, forbiddenPedHash in ipairs(forbiddenPeds) do

@@ -33,6 +33,17 @@ Config.Progress = {
     useWhileDead = false
 }
 
+Config.NotifyStyle = {
+    position = 'right-top',
+    style = {
+        backgroundColor = '#141517',
+        color = '#C1C2C5',
+        ['.description'] = {
+          color = '#909296'
+        }
+    },
+}
+
 Config.forbiddenPeds = {
         -- Human peds
         `mp_m_freemode_01`,
