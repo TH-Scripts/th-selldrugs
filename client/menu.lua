@@ -1,7 +1,7 @@
 currentDrug = 'Intet'
-canSell     = false
 sellEcstasy = false
 sellCannabis = false
+sellHeroin = false
 
 
 function Drugmenu()
@@ -10,7 +10,6 @@ function Drugmenu()
             id = 'selldrugs_notstarted',
             title = 'Påbegynd salg af drugs',
             onExit = function()
-                canSell     = false
                 currentDrug = 'Intet'
                 sellstarted = nil
             end,
@@ -19,11 +18,11 @@ function Drugmenu()
                 title = Config.Title..'\n Drug valgt: ' ..currentDrug,
             },
             {
-                title = 'Vælg drug-type',
-                description = 'Vælg hvilket drug-type du ønsker at sælge',
+                title = TranslateCap('drugmenu_title'),
+                description = TranslateCap('drugmenu_title_desc'),
                 icon = 'clipboard',
                 onSelect = function()
-                    if cannabis > 0 or ecstasy > 0 then
+                    if cannabis > 0 or ecstasy > 0 or heroin > 0 then
                         DrugmenuStoffer()
                     else
                         notifyHarIngenDrugs()
@@ -31,8 +30,8 @@ function Drugmenu()
                 end
             },
             {
-                title = 'Påbegynd salg',
-                description = 'Påbegynd salg af dit valgte drug her',
+                title = TranslateCap('drugmenu_sale_title'),
+                description = TranslateCap('drugmenu_sale_title_desc'),
                 icon = 'circle-check',
                 onSelect = function()
                     if sellstarted == nil then
@@ -51,19 +50,22 @@ function Drugmenu()
     if sellstarted then
         lib.registerContext({
             id = 'selldrugs_started',
-            title = 'Stop salg af drugs',
+            title = TranslateCap('drugmenu_sale_stop_title'),
             options = {
             {
                 title = Config.Title,
             },
             {
-                title = 'Afslut salg',
-                description = 'Stop med at sælge stoffer',
+                title = TranslateCap('drugmenu_sale_stop'),
+                description = TranslateCap('drugmenu_sale_stop_desc'),
                 icon = 'circle-xmark',
                 onSelect = function()
                     sellstarted = nil
                     currentDrug = 'Intet'
                     notifySalgStop()
+                    sellEcstasy = false
+                    sellCannabis = false
+                    sellHeroin = false
                 end
             },
             }
@@ -79,12 +81,10 @@ function DrugmenuStoffer()
             title = 'Forskellige drugs',
             menu = 'selldrugs_notstarted',
             onBack = function()
-                canSell     = false
                 currentDrug = 'Intet'
                 sellstarted = nil
             end,
             onExit = function()
-                canSell     = false
                 currentDrug = 'Intet'
                 sellstarted = nil
             end, 
@@ -98,23 +98,33 @@ function DrugmenuStoffer()
                 icon = 'tablets',
                 disabled = disabledEcstasy,
                 onSelect = function()
-                    currentDrug = 'Ecstasy- Antal '..ecstasy..''
+                    currentDrug = 'Ecstasy - Antal '..ecstasy..''
                     Drugmenu()
-                    canSell     = true
                     sellEcstasy = true
                     sellstarted = true
                 end
             },
             {
-                title = 'Cannabis',
-                description = 'Tryk for at vælge cannabis!\n ANTAL: '..cannabis,
-                icon = 'cannabis',
+                title = 'Joints',
+                description = 'Tryk for at vælge joints!\n ANTAL: '..cannabis,
+                icon = 'joint',
                 disabled = disabledCannabis,
                 onSelect = function()
-                    currentDrug = 'Cannabis - Antal '..cannabis..''
+                    currentDrug = 'Joints - Antal '..cannabis..''
                     Drugmenu()
-                    canSell      = true
                     sellCannabis = true
+                    sellstarted = true
+                end
+            },
+            {
+                title = 'Heroin',
+                description = 'Tryk for at vælge heroin!\n ANTAL: '..heroin,
+                icon = 'syringe',
+                disabled = disabledHeroin,
+                onSelect = function()
+                    currentDrug = 'Heroin - Antal '..heroin..''
+                    Drugmenu()
+                    sellHeroin = true
                     sellstarted = true
                 end
             },

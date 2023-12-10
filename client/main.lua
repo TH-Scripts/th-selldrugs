@@ -33,6 +33,16 @@ AddEventHandler('th-selldrugs:getDrugCounts', function()
         end
 
     end)
+    ESX.TriggerServerCallback('th-selldrugs:drugCountHeroin', function(count3)
+        heroin = count3
+
+        if heroin <= 0 then
+            disabledHeroin = true
+        else
+            disabledHeroin = false
+        end
+
+    end)
 end)
 
 Citizen.CreateThread(function(ecstasy, cannabis)
@@ -47,7 +57,7 @@ Citizen.CreateThread(function(ecstasy, cannabis)
                 success, ped = FindNextPed(handle)
                 local pedPos = GetEntityCoords(ped)
                 local distance = GetDistanceBetweenCoords(pedPos.x, pedPos.y, pedPos.z, playerlocation.x, playerlocation.y, playerlocation.z, true)
-                if sellEcstasy or sellCannabis then
+                if sellEcstasy or sellCannabis or sellHeroin then
                     if DoesEntityExist(ped) then
                         local pedType = GetPedType(ped)
                         if pedType ~= 28 and IsPedAPlayer(ped) == false then
@@ -104,7 +114,7 @@ Citizen.CreateThread(function(ecstasy, cannabis)
                                                         paperAnim(player)
                                                         moneyAnim(ped)
                                                         sellingnow = true
-                                                        sellDrugs(sellCannabis, sellEcstasy)
+                                                        sellDrugs(sellCannabis, sellEcstasy, sellHeroin)
                                                     end
                                                 end
                                             else
@@ -124,19 +134,18 @@ Citizen.CreateThread(function(ecstasy, cannabis)
     end
 end)
 
-
-
-
-
 RegisterNetEvent('th-selldrugs:stopDrugSale')
 AddEventHandler('th-selldrugs:stopDrugSale', function()
     sellstarted = nil
     currentDrug = 'Intet'
+    sellEcstasy = false
+    sellCannabis = false
+    sellHeroin = false
 end)
 
-function sellDrugs(sellCannabis, sellEcstasy)
+function sellDrugs(sellCannabis, sellEcstasy, sellHeroin)
     if sellingnow then
-        TriggerServerEvent('th-selldrugs:sell', sellCannabis, sellEcstasy)
+        TriggerServerEvent('th-selldrugs:sell', sellCannabis, sellEcstasy, sellHeroin)
         -- indsæt dit zone export, eller serverevent her
         sellingnow = false
     end

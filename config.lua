@@ -1,11 +1,14 @@
 Config = {}
+Config.Locale = 'da'
 
 -- Drug item & priser
 Config.Drugs = {
     ecstasy = 'burger',
     ecstasyPrice = 200,
-    cannabis = 'water',
-    cannabisPrice = 150
+    joints = 'water',
+    jointsPrice = 150,
+    heroin = 'cola',
+    heroinPrice = 250
 }
 
 --Politi handlinger

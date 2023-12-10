@@ -6,13 +6,19 @@ ESX.RegisterServerCallback('th-selldrugs:drugCountEcstasy', function(source, cb)
 end)
 
 ESX.RegisterServerCallback('th-selldrugs:drugCountCannabis', function(source, cb)
-    local countCannabis = exports.ox_inventory:GetItemCount(1, Config.Drugs.cannabis)
+    local countCannabis = exports.ox_inventory:GetItemCount(1, Config.Drugs.joints)
     cb(countCannabis)
 end)
 
-RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy)
+ESX.RegisterServerCallback('th-selldrugs:drugCountHeroin', function(source, cb)
+    local countHeroin = exports.ox_inventory:GetItemCount(1, Config.Drugs.heroin)
+    cb(countHeroin)
+end)
+
+RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy, sellHeroin)
     local ecstacy  = exports.ox_inventory:GetItemCount(1, Config.Drugs.ecstasy)
-    local cannabis = exports.ox_inventory:GetItemCount(1, Config.Drugs.cannabis)
+    local cannabis = exports.ox_inventory:GetItemCount(1, Config.Drugs.joints)
+    local heroin = exports.ox_inventory:GetItemCount(1, Config.Drugs.heroin)
     local drugType = nil
 
     if sellEcstasy then
@@ -27,10 +33,8 @@ RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy)
         elseif ecstacy >= 3 then
             x = math.random(1,3)
         end
-    end
-
-    if sellCannabis then
-        drugType = Config.Drugs.cannabis
+    elseif sellCannabis then
+        drugType = Config.Drugs.joints
         if cannabis < 1 then
             x = 0
             TriggerClientEvent('th-selldrugs:stopDrugSale', source)
@@ -41,12 +45,26 @@ RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy)
         elseif cannabis >= 3 then
             x = math.random(1,3)
         end
+    elseif sellHeroin then
+        drugType = Config.Drugs.heroin
+        if heroin < 1 then
+            x = 0
+            TriggerClientEvent('th-selldrugs:stopDrugSale', source)
+        elseif heroin == 1 then
+            x = 1
+        elseif heroin == 2 then
+            x = math.random(1,2)
+        elseif heroin >= 3 then
+            x = math.random(1,3)
+        end
     end
 
     if drugType == Config.Drugs.ecstasy then
         money = Config.Drugs.ecstasyPrice * x
-    elseif drugType == Config.Drugs.cannabis then
-        money = Config.Drugs.cannabisPrice * x
+    elseif drugType == Config.Drugs.joints then
+        money = Config.Drugs.jointsPrice * x
+    elseif drugType == Config.Drugs.heroin then
+        money = Config.Drugs.heroinPrice * x
     end
 
     if drugType ~= nil then
