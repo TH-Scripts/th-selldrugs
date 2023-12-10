@@ -17,22 +17,22 @@ ESX.RegisterServerCallback('th-selldrugs:drugCountHeroin', function(source, cb)
 end)
 
 RegisterNetEvent('th-selldrugs:sell', function(sellCannabis, sellEcstasy, sellHeroin)
-    local ecstacy  = exports.ox_inventory:GetItemCount(1, Config.Drugs.ecstasy)
+    local ecstasy  = exports.ox_inventory:GetItemCount(1, Config.Drugs.ecstasy)
     local cannabis = exports.ox_inventory:GetItemCount(1, Config.Drugs.joints)
     local heroin = exports.ox_inventory:GetItemCount(1, Config.Drugs.heroin)
     local drugType = nil
 
     if sellEcstasy then
         drugType = Config.Drugs.ecstasy
-        if ecstacy < 1 then
+        if ecstasy < 1 then
             x = 0
             cannotSell = true
             TriggerClientEvent('th-selldrugs:stopDrugSale', source)
-        elseif ecstacy == 1 then
+        elseif ecstasy == 1 then
             x = 1
-        elseif ecstacy == 2 then
+        elseif ecstasy == 2 then
             x = math.random(1,2)
-        elseif ecstacy >= 3 then
+        elseif ecstasy >= 3 then
             x = math.random(1,3)
         end
     elseif sellCannabis then

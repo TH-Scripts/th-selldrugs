@@ -62,13 +62,7 @@ function Drugmenu()
                 description = TranslateCap('drugmenu_sale_stop_desc'),
                 icon = 'circle-xmark',
                 onSelect = function()
-                    sellstarted = nil
-                    currentDrug = 'Intet'
-                    notifySalgStop()
-                    sellEcstasy = false
-                    sellCannabis = false
-                    sellHeroin = false
-                    canStartSell = nil
+                    TriggerEvent('th-selldrugs:stopDrugSale')
                 end
             },
             }
