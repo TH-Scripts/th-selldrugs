@@ -88,7 +88,7 @@ RegisterNetEvent('th-selldrug:dispatch', function(pedPos)
     if Config.Calllist == 'omikkel' then
         exports["omik_callist"]:newCall(source, "Drug salg", Config.PoliceJob, pedPos)
     elseif Config.Calllist == 'visualz' then
-        exports['visualz_opkaldsliste']:AddCall(source, "Drug salg", Config.PoliceJob, pedPos)
+        exports['visualz_opkaldsliste']:AddCall(nil, "Drug salg", Config.PoliceJob, pedPos)
     elseif Config.Callist == 'custom' then
         print('[X] Indstil din calllist!')
         --Indsæt dit eget dispatch system her
